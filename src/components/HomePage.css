@@ -1,0 +1,91 @@
+a:link,
+a:visited {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.homePage {
+  border: 5px solid black;
+  margin: 100px;
+  padding: 20px;
+  height: auto;
+}
+
+.welcome {
+  margin-left: 50px;
+}
+.description {
+  margin-left: 50px;
+}
+.btn {
+  display: block;
+  margin-left: 50px;
+  margin-bottom: 10px;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  height: 50px;
+  width: 100px;
+  font-size: 20px;
+}
+
+.btnModal {
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+.btnLogOut {
+  display: block;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 20px;
+  margin-top: -4px;
+  margin-left: 85px;
+}
+
+.searchPage:link,
+.searchPage:visited {
+  margin-left: 50px;
+  border: 1px solid black;
+  border-radius: 4px;
+  text-decoration: none;
+  color: black;
+}
+.searchPage:hover {
+  margin-left: 50px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  background-color: black;
+}
+
+.logo {
+  margin-left: 50px;
+  height: 100px;
+  width: 120px;
+  margin-top: 20px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  height: 58px;
+  background: black;
+  border-radius: 6px;
+}
+
+.navLi {
+  list-style: none;
+  color: white;
+  font-size: 20px;
+  line-height: 16px;
+  color: #ffffff;
+  margin-top: 19px;
+  margin-right: 45px;
+}
+
+.welcomeUser {
+  margin-left: 45px;
+}

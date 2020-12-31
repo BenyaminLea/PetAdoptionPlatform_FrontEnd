@@ -1,0 +1,31 @@
+.card {
+  border: 1px solid black;
+  margin: 5px;
+}
+
+.cardName {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.cardImage {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+}
+.cardType {
+  margin: 10px;
+  font-size: 15px;
+}
+
+.cardBtn {
+  margin: 10px;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
+}
