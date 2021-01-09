@@ -111,6 +111,7 @@ class Homepage extends React.Component {
       phone: this.state.phone,
       shortBio: "",
       pets: [],
+      petsSaved: [],
     };
     fetch("http://localhost:5000/api/signup", {
       headers: { "Content-Type": "application/json" },

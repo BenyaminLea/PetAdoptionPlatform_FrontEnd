@@ -1,137 +1,183 @@
 import React from "react";
 import "./ProfileSettings.css";
+import { withRouter } from "react-router-dom";
+import logo from "./logo.jpg";
+import "./HomePage.css";
 
 class ProfileSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      emailSignIn: "",
-      passwordSignIn1: "",
-      passwordSignIn2: "",
-      firstName: "",
-      lastName: "",
-      phone: "",
-      shortBio: "",
+      user: {},
+      message: "",
     };
   }
 
-  handleEmailSignInChange(event) {
-    this.setState({ emailSignIn: event.target.value });
+  componentDidMount() {
+    const token = localStorage.getItem("token");
+    fetch("http://localhost:5000/api/login", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.loggedIn) {
+          this.setState({ user: data.user });
+          console.log(this.state.user);
+        } else {
+          this.props.history.push("/");
+        }
+      });
   }
-  handlePasswordSignIn1Change(event) {
-    this.setState({ passwordSignIn1: event.target.value });
+
+  goBack() {
+    this.props.history.goBack();
+  }
+
+  handleEmailChange(event) {
+    this.setState((prevState) => ({
+      user: {
+        ...prevState.user,
+        email: event.target.value,
+      },
+    }));
+  }
+  handlePasswordChange(event) {
+    this.setState((prevState) => ({
+      user: {
+        ...prevState.user,
+        password: event.target.value,
+      },
+    }));
   }
   handleFirstNameSignInChange(event) {
-    this.setState({ firstName: event.target.value });
+    this.setState((prevState) => ({
+      user: {
+        ...prevState.user,
+        firstName: event.target.value,
+      },
+    }));
   }
   handleLastNameSignInChange(event) {
-    this.setState({ lastName: event.target.value });
+    this.setState((prevState) => ({
+      user: {
+        ...prevState.user,
+        lastName: event.target.value,
+      },
+    }));
   }
   handlePhoneSignInChange(event) {
-    this.setState({ phone: event.target.value });
+    this.setState((prevState) => ({
+      user: {
+        ...prevState.user,
+        phone: event.target.value,
+      },
+    }));
   }
   handleShortBioChange(event) {
-    this.setState({ shortBio: event.target.value });
+    this.setState((prevState) => ({
+      user: {
+        ...prevState.user,
+        shortBio: event.target.value,
+      },
+    }));
   }
   Change() {
-    if (this.state.passwordSignIn1 === this.state.passwordSignIn2) {
-      const newUser = {
-        email: this.state.emailSignIn,
-        password: this.state.passwordSignIn1,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        phone: this.state.phone,
-        shortBio: "",
-      };
-      console.log(newUser);
-      //modifier l'user dans la base de données
-    } else {
-      // print alert
-    }
+    const url = "http://localhost:5000/api/user/" + this.state.user._id;
+    fetch(url, {
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+      body: JSON.stringify(this.state.user),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({ message: data.message });
+      });
   }
 
   render() {
     return (
-      <div className="profileSettings">
-        <h1>Profile Settings</h1>
-        <div>
-          <div> Email Address</div>
-          <input
-            type="text"
-            name="emailSignIn"
-            id="emailSignIn"
-            value={this.state.emailSignIn}
-            onChange={(event) => this.handleEmailSignInChange(event)}
-          />
-        </div>
-        <div>
-          <div>Password</div>
-          <input
-            type="text"
-            name="passwordSignIn1"
-            id="passwordSignIn1"
-            value={this.state.passwordSignIn1}
-            onChange={(event) => this.handlePasswordSignIn1Change(event)}
-          />
-        </div>
-        <div>
-          <div>Password Again</div>
-          <input
-            type="text"
-            name="passwordSignIn2"
-            id="passwordSignIn2"
-            value={this.state.passwordSignIn2}
-            onChange={(event) => this.handlePasswordSignIn2Change(event)}
-          />
-        </div>
-        <div>
-          <div>First Name</div>
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            value={this.state.firstName}
-            onChange={(event) => this.handleFirstNameSignInChange(event)}
-          />
-        </div>
-        <div>
-          <div>Last Name</div>
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            value={this.state.lastName}
-            onChange={(event) => this.handleLastNameSignInChange(event)}
-          />
-        </div>
-        <div>
-          <div>Phone Number </div>
-          <input
-            type="text"
-            name="phone"
-            id="phone"
-            value={this.state.phone}
-            onChange={(event) => this.handlePhoneSignInChange(event)}
-          />
-        </div>
-        <div>
-          <div>Short Bio</div>
-          <input
-            type="text"
-            name="shortBio"
-            id="shortBio"
-            value={this.state.shortBio}
-            onChange={(event) => this.handleShortBioChange(event)}
-          />
-        </div>
-        <div>
-          <button className="change" onClick={() => this.Change()}>
-            Save Changes
-          </button>
+      <div className="homePage">
+        <button onClick={() => this.goBack()}>Back to the home page</button>
+        <img src={logo} alt="logo" className="logo" />
+        <div className="profileSettings">
+          <h1>Profile Settings</h1>
+          <div>
+            <div> Email Address</div>
+            <input
+              type="text"
+              name="emailSignIn"
+              id="emailSignIn"
+              value={this.state.user.email}
+              onChange={(event) => this.handleEmailChange(event)}
+            />
+          </div>
+          <div>
+            <div>Password</div>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={this.state.user.password}
+              onChange={(event) => this.handlePasswordChange(event)}
+            />
+          </div>
+          <div>
+            <div>First Name</div>
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              value={this.state.user.firstName}
+              onChange={(event) => this.handleFirstNameSignInChange(event)}
+            />
+          </div>
+          <div>
+            <div>Last Name</div>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              value={this.state.user.lastName}
+              onChange={(event) => this.handleLastNameSignInChange(event)}
+            />
+          </div>
+          <div>
+            <div>Phone Number </div>
+            <input
+              type="text"
+              name="phone"
+              id="phone"
+              value={this.state.user.phone}
+              onChange={(event) => this.handlePhoneSignInChange(event)}
+            />
+          </div>
+          <div>
+            <div>Short Bio</div>
+            <input
+              type="text"
+              name="shortBio"
+              id="shortBio"
+              value={this.state.user.shortBio}
+              onChange={(event) => this.handleShortBioChange(event)}
+            />
+          </div>
+          <div>{this.state.message && <div>{this.state.message}</div>} </div>
+          <div>
+            <button className="change" onClick={() => this.Change()}>
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default ProfileSettings;
+export default withRouter(ProfileSettings);

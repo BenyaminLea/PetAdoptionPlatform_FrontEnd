@@ -17,7 +17,6 @@ function HomePageIn() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         if (data.loggedIn) {
           setLogInStatus(data.user.firstName + " " + data.user.lastName);
         } else {

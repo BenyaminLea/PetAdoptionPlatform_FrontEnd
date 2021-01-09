@@ -1,6 +1,7 @@
 import "./PetCard.css";
 import { useHistory } from "react-router-dom";
-
+import logo from "./logo.jpg";
+import "./HomePage.css";
 function PetCard(props) {
   const history = useHistory();
   const seeMore = () => {
@@ -14,7 +15,7 @@ function PetCard(props) {
         src={`http://localhost:5000/${props.pet.picture}`}
         className="cardImage"
       />
-      <div className="cardType">Type : {props.pet.type}</div>
+      <div className="cardStatus">Status : {props.pet.adoptionStatus}</div>
       <button className="cardBtn" onClick={seeMore}>
         See More
       </button>
